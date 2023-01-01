@@ -6,7 +6,14 @@
  */
 
 import React, {useState} from 'react';
-import {View, Text, Button, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import DateHead from './components/DateHead';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import AddTodo from './components/AddTodo';
@@ -19,9 +26,13 @@ const App = () => {
   return (
     <SafeAreaProvider>
       <SafeAreaView edges={['bottom']} style={styles.block}>
-        <DateHead date={today} />
-        <Empty />
-        <AddTodo />
+        <KeyboardAvoidingView
+          behavior={Platform.select({ios: 'padding', android: undefined})}
+          style={styles.avoid}>
+          <DateHead date={today} />
+          <Empty />
+          <AddTodo />
+        </KeyboardAvoidingView>
       </SafeAreaView>
     </SafeAreaProvider>
   );
@@ -31,6 +42,9 @@ const styles = StyleSheet.create({
   block: {
     flex: 1,
     backgroundColor: 'white', // 안드로이드 기본 배경색은 회색
+  },
+  avoid: {
+    flex: 1, // ios는 keyboardAvoidingPlatform으로 키보드 동작 설정
   },
 });
 
