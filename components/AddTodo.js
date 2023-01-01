@@ -7,10 +7,16 @@ import {
   TouchableOpacity,
   TouchableNativeFeedback,
   Platform,
+  Keyboard,
 } from 'react-native';
 
 function AddTodo() {
   const [text, setText] = useState('');
+
+  const onPress = () => {
+    setText('');
+    Keyboard.dismiss;
+  };
 
   const button = (
     <View style={styles.buttonStyle}>
@@ -24,36 +30,24 @@ function AddTodo() {
         style={styles.input}
         value={text}
         onChangeText={setText}
+        onSubmitEditing={onPress}
+        returnKeyType="done"
       />
       {Platform.select({
-        ios: <TouchableOpacity activeOpacity={0.5}>{button}</TouchableOpacity>,
+        ios: (
+          <TouchableOpacity activeOpacity={0.5} onPress={onPress}>
+            {button}
+          </TouchableOpacity>
+        ),
         // android에서만 적용되는 컴포넌트
         android: (
           <View style={styles.circleWrapper}>
-            <TouchableNativeFeedback>{button}</TouchableNativeFeedback>
+            <TouchableNativeFeedback onPress={onPress}>
+              {button}
+            </TouchableNativeFeedback>
           </View>
         ),
       })}
-      {/* {Platform.OS === 'ios' ? (
-        <TouchableOpacity activeOpacity={0.5}>
-          <View style={styles.buttonStyle}>
-            <Image
-              source={require('../assets/icons/add_white/add_white.png')}
-            />
-          </View>
-        </TouchableOpacity>
-      ) : (
-        // android에서만 적용되는 컴포넌트
-        <View style={styles.circleWrapper}>
-          <TouchableNativeFeedback>
-            <View style={styles.buttonStyle}>
-              <Image
-                source={require('../assets/icons/add_white/add_white.png')}
-              />
-            </View>
-          </TouchableNativeFeedback>
-        </View>
-      )} */}
     </View>
   );
 }
