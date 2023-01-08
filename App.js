@@ -22,8 +22,30 @@ const App = () => {
     {id: 3, text: '투두리스트 만들어보기', done: false},
   ]);
 
+  // Async Storage 불러오기
   useEffect(() => {
-    console.log(todos);
+    async function load() {
+      try {
+        const rawTodos = await AsyncStorage.getItem('todos');
+        const savedTodos = JSON.parse(rawTodos);
+        setTodos(savedTodos);
+      } catch (e) {
+        console.log('Failed to load todos');
+      }
+    }
+    load();
+  }, []);
+
+  // Async Storage 저장
+  useEffect(() => {
+    async function save() {
+      try {
+        await AsyncStorage.setItem('todos', JSON.stringify(todos));
+      } catch (e) {
+        console.log(todos);
+      }
+    }
+    save();
   }, [todos]);
 
   const onInsert = text => {
