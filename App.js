@@ -23,7 +23,7 @@ const App = () => {
     {id: 3, text: '투두리스트 만들어보기', done: false},
   ]);
 
-  // Async Storage 불러오기1
+  // Async Storage 불러오기
   useEffect(() => {
     // get 결과물을 setTodos의 인자로 함
     todosStorage.get().then(setTodos).catch(console.error);
