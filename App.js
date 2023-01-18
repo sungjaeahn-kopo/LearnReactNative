@@ -13,6 +13,12 @@ import AddTodo from './components/AddTodo';
 import Empty from './components/Empty';
 import TodoList from './components/TodoList';
 import todosStorage from './storages/todosStorage';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import HomeScreen from './components/screens/HomeScreen';
+import DetailScreen from './components/screens/DetailScreen';
+
+const Stack = createNativeStackNavigator();
 
 const App = () => {
   const today = new Date();
@@ -59,21 +65,27 @@ const App = () => {
   };
 
   return (
-    <SafeAreaProvider>
-      <SafeAreaView edges={['bottom']} style={styles.block}>
-        <KeyboardAvoidingView
-          behavior={Platform.select({ios: 'padding', android: undefined})}
-          style={styles.avoid}>
-          <DateHead date={today} />
-          {todos.length === 0 ? (
-            <Empty />
-          ) : (
-            <TodoList todos={todos} onToggle={onToggle} onRemove={onRemove} />
-          )}
-          <AddTodo onInsert={onInsert} />
-        </KeyboardAvoidingView>
-      </SafeAreaView>
-    </SafeAreaProvider>
+    // <SafeAreaProvider>
+    //   <SafeAreaView edges={['bottom']} style={styles.block}>
+    //     <KeyboardAvoidingView
+    //       behavior={Platform.select({ios: 'padding', android: undefined})}
+    //       style={styles.avoid}>
+    //       <DateHead date={today} />
+    //       {todos.length === 0 ? (
+    //         <Empty />
+    //       ) : (
+    //         <TodoList todos={todos} onToggle={onToggle} onRemove={onRemove} />
+    //       )}
+    //       <AddTodo onInsert={onInsert} />
+    //     </KeyboardAvoidingView>
+    //   </SafeAreaView>
+    // </SafeAreaProvider>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Detail" component={DetailScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
