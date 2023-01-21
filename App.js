@@ -6,6 +6,7 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
+  TouchableOpacity,
 } from 'react-native';
 import DateHead from './components/DateHead';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
@@ -30,15 +31,15 @@ const App = () => {
   ]);
 
   // Async Storage 불러오기
-  useEffect(() => {
-    // get 결과물을 setTodos의 인자로 함
-    todosStorage.get().then(setTodos).catch(console.error);
-  }, []);
+  // useEffect(() => {
+  //   // get 결과물을 setTodos의 인자로 함
+  //   todosStorage.get().then(setTodos).catch(console.error);
+  // }, []);
 
-  // Async Storage 저장
-  useEffect(() => {
-    todosStorage.set(todos).catch(console.error);
-  }, [todos]);
+  // // Async Storage 저장
+  // useEffect(() => {
+  //   todosStorage.set(todos).catch(console.error);
+  // }, [todos]);
 
   const onInsert = text => {
     const nextId =
@@ -82,8 +83,47 @@ const App = () => {
     // </SafeAreaProvider>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Detail" component={DetailScreen} />
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            title: '홈',
+            headerStyle: {
+              backgroundColor: '#29b6f6',
+            },
+            headerTintColor: '#ffffff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontSize: 20,
+            },
+          }}
+        />
+        <Stack.Screen
+          name="Detail"
+          component={DetailScreen}
+          options={{
+            // 안드로이드 백 버튼 감추기
+            headerBackVisible: false,
+            headerLeft: ({onPress}) => (
+              <TouchableOpacity onPress={onPress}>
+                <Text>Left</Text>
+              </TouchableOpacity>
+            ),
+            headerTitle: ({children}) => (
+              <View>
+                <Text>{children}</Text>
+              </View>
+            ),
+            headerRight: () => (
+              <View>
+                <Text>Right</Text>
+              </View>
+            ),
+          }}
+          // options={({route}) => ({
+          //   title: `상세 정보 - ${route.params.id}`,
+          // })}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
