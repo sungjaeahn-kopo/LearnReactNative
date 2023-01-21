@@ -110,11 +110,24 @@ const App = () => {
           drawerActiveTintColor: 'white',
         }}
         drawerPosition="left"
-        backBehavior="history">
+        backBehavior="history"
+        drawerContent={({navigation}) => (
+          // 아이폰 사용시 꼭 필수 선언 컴포넌트
+          <SafeAreaView>
+            <Text>A Custom Drawer</Text>
+            <Button
+              onPress={() => navigation.closeDrawer()}
+              title="Drawer 닫기"
+            />
+          </SafeAreaView>
+        )}>
         <Drawer.Screen
           name="Home"
           component={HomeScreen}
-          options={{title: '홈'}}
+          options={{
+            title: '홈',
+            //  headerLeft: () => <Text>Left</Text>
+          }}
         />
         <Drawer.Screen
           name="Setting"
