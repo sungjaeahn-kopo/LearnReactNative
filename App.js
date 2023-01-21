@@ -18,6 +18,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import HomeScreen from './components/screens/HomeScreen';
 import DetailScreen from './components/screens/DetailScreen';
+import HeaderlessScreen from './components/screens/HeaderlessScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -82,7 +83,10 @@ const App = () => {
     //   </SafeAreaView>
     // </SafeAreaProvider>
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator
+        initialRouteName="Home"
+        // 모든 화면에서 Header 없애는 code
+        screenOptions={{headerShown: false}}>
         <Stack.Screen
           name="Home"
           component={HomeScreen}
@@ -123,6 +127,11 @@ const App = () => {
           // options={({route}) => ({
           //   title: `상세 정보 - ${route.params.id}`,
           // })}
+        />
+        <Stack.Screen
+          name="Headerless"
+          component={HeaderlessScreen}
+          options={{headerShown: false}}
         />
       </Stack.Navigator>
     </NavigationContainer>

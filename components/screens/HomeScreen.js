@@ -20,6 +20,10 @@ function HomeScreen({navigation}) {
         title="Detail 3 열기"
         onPress={() => navigation.push('Detail', {id: 3})}
       />
+      <Button
+        title="Headerless 열기"
+        onPress={() => navigation.push('Headerless')}
+      />
     </View>
   );
 }
