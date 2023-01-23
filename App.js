@@ -14,7 +14,11 @@ import AddTodo from './components/AddTodo';
 import Empty from './components/Empty';
 import TodoList from './components/TodoList';
 import todosStorage from './storages/todosStorage';
-import {NavigationContainer, StackActions} from '@react-navigation/native';
+import {
+  getFocusedRouteNameFromRoute,
+  NavigationContainer,
+  StackActions,
+} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -23,6 +27,19 @@ import MainScreen from './components/screens/MainScreen';
 import DetailScreen from './components/screens/DetailScreen';
 
 const Stack = createNativeStackNavigator();
+
+function getHeaderTitle(route) {
+  // 최신 JS 문법 : nullish 병합 연산자 >> 연산자 좌측 null/undefined => 우측값
+  const routeName = getFocusedRouteNameFromRoute(route) ?? 'Home';
+  const nameMap = {
+    Home: '홈',
+    Search: '검색',
+    Notification: '알림',
+    Message: '메세지',
+  };
+
+  return nameMap[routeName];
+}
 
 const App = () => {
   // const today = new Date();
@@ -90,6 +107,9 @@ const App = () => {
           name="Main"
           component={MainScreen}
           // options={{headerShown: false}}
+          options={({route}) => ({
+            title: getHeaderTitle(route),
+          })}
         />
         <Stack.Screen
           name="Detail"
