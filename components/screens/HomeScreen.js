@@ -1,14 +1,28 @@
+import {useNavigation} from '@react-navigation/native';
 import React, {useEffect} from 'react';
 import {Button, View} from 'react-native';
 
+function OpenDetailButton() {
+  const navigation = useNavigation();
+
+  return (
+    <Button
+      title="Detail 1 열기"
+      onPress={() => navigation.push('Detail', {id: 1})}
+    />
+  );
+}
+
 function HomeScreen({navigation}) {
-  useEffect(() => {
-    navigation.setOptions({title: '홈'});
-  }, [navigation]);
+  // useEffect(() => {
+  //   navigation.setOptions({title: '홈'});
+  // }, [navigation]);
 
   return (
     <View>
-      <Button
+      <Text>Home</Text>
+      <OpenDetailButton />
+      {/* <Button
         title="Detail 1 열기"
         onPress={() => navigation.push('Detail', {id: 1})}
       />
@@ -23,7 +37,7 @@ function HomeScreen({navigation}) {
       <Button
         title="Headerless 열기"
         onPress={() => navigation.push('Headerless')}
-      />
+      /> */}
     </View>
   );
 }
