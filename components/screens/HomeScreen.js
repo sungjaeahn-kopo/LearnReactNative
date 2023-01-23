@@ -13,7 +13,7 @@ function OpenDetailButton() {
   );
 }
 
-function HomeScreen({navigation}) {
+function HomeScreen() {
   // useEffect(() => {
   //   navigation.setOptions({title: '홈'});
   // }, [navigation]);
